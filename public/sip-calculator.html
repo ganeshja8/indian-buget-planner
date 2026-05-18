@@ -116,3 +116,86 @@
             color: #059669;
             font-size: 22px;
             font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-card">
+        <h2>SIP Calculator</h2>
+        
+        <div class="input-group">
+            <label for="monthly-investment">Monthly Investment (₹)</label>
+            <input type="number" id="monthly-investment" value="5000" min="500">
+        </div>
+        
+        <div class="input-group">
+            <label for="expected-return">Expected Return Rate (% p.a)</label>
+            <input type="number" id="expected-return" value="12" min="1" step="0.1">
+        </div>
+        
+        <div class="input-group">
+            <label for="time-period">Time Period (Years)</label>
+            <input type="number" id="time-period" value="10" min="1">
+        </div>
+
+        <button onclick="calculateSIP()">Calculate Returns</button>
+
+        <div class="results-container">
+            <div class="result-row">
+                <span>Invested Amount</span>
+                <span id="invested-amount">₹0</span>
+            </div>
+            <div class="result-row">
+                <span>Est. Returns</span>
+                <span id="est-returns">₹0</span>
+            </div>
+            <div class="result-row final-amount">
+                <span>Total Value</span>
+                <span id="total-value">₹0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Indian Rupee Formatter
+        const formatter = new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR',
+            maximumFractionDigits: 0
+        });
+
+        function calculateSIP() {
+            // Get input values
+            const monthlyInvestment = parseFloat(document.getElementById('monthly-investment').value);
+            const annualInterestRate = parseFloat(document.getElementById('expected-return').value);
+            const years = parseFloat(document.getElementById('time-period').value);
+
+            // Validation check
+            if (isNaN(monthlyInvestment) || isNaN(annualInterestRate) || isNaN(years) || 
+                monthlyInvestment <= 0 || annualInterestRate <= 0 || years <= 0) {
+                alert("Please enter valid numbers");
+                return;
+            }
+
+            // Calculation logic
+            const monthlyRate = annualInterestRate / 12 / 100;
+            const months = years * 12;
+
+            // SIP Formula
+            const totalValue = monthlyInvestment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+            const totalInvested = monthlyInvestment * months;
+            const estimatedReturns = totalValue - totalInvested;
+
+            // Update UI with formatted values
+            document.getElementById('invested-amount').innerText = formatter.format(totalInvested);
+            document.getElementById('est-returns').innerText = formatter.format(estimatedReturns);
+            document.getElementById('total-value').innerText = formatter.format(totalValue);
+        }
+
+        // Run calculation automatically when the page loads
+        window.onload = calculateSIP;
+    </script>
+
+</body>
+</html>
