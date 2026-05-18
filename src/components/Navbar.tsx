@@ -5,7 +5,7 @@ import { Menu, X } from 'lucide-react';
 const NAV_LINKS = [
   { name: 'Home', path: '/' },
   { name: 'IndiaBudgetPlanner Calculator', path: '/calculator' },
-  { name: 'Blog', path: '/blog' },
+  { name: 'Blog', path: 'https://blog.indiabugetplanner.site' },
   { name: 'City Wise Guides', path: '/guides' },
   { name: 'About Us', path: '/about' },
   { name: 'Contact', path: '/contact' },
