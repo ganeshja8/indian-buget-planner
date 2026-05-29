@@ -34,18 +34,34 @@ export const Navbar = () => {
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex space-x-1 lg:space-x-4">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.name}
-                to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  location.pathname === link.path
-                    ? 'bg-slate-800 text-blue-400'
-                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
-                }`}
-              >
-                {link.name}
-              </Link>
+{NAV_LINKS.map((link) => (
+              link.path.startsWith('http') ? (
+                <a
+                  key={link.name}
+                  href={link.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === link.path
+                      ? 'bg-slate-800 text-blue-400'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  }`}
+                >
+                  {link.name}
+                </a>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    location.pathname === link.path
+                      ? 'bg-slate-800 text-blue-400'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
             ))}
           </nav>
 
